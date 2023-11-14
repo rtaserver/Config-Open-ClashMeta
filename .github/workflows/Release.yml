@@ -1,61 +1,33 @@
-# release action with semantic release
-name: Release
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - master
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - "latest" # Push events to matching v*, i.e. v1.0, v20.15.10
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
-env:
-  reporta: ${{ github.repository }}
+name: Create Release
 
 jobs:
-  release:
-    name: Release
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Set variables
-        run: |
-          echo "BUILDTIME=$(TZ=Asia/Jakarta date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Set timezone to WIB Jakarta
-        uses: szenius/set-timezone@v1.2
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          timezoneLinux: "Asia/Jakarta"
-          timezoneMacos: "Asia/Jakarta"
-          timezoneWindows: "Indonesia Standard Time"
-
-      - name: Delete current release assets
-        uses: andreaswilli/delete-release-assets-action@v3.0.0
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }} ${{ env.BUILDTIME }}
+          body: |
+            ## :mega:Update content
+          draft: true
+          prerelease: false
+      - name: Publish release
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: latest
-          deleteOnlyFromDrafts: false
-
-      - name: Read release.md and use it as a body of new release
-        id: read_release
-        shell: bash
-        run: |
-          r="## :mega:Update content"
-          r="${r//$'\n'/'![](https://img.shields.io/github/downloads/${{ env.reporta }}/${{needs.job_check.outputs.reporta_version}}/total?style=flat-square)'}"
-          r="${r//$'\n'/'### GeoSite - GeoDat Info'}"
-          r="${r//$'\n'/'### Created By : RizkiKotet'}"
-          echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
-
-      - name: Git push assets to "release" branch
-        run: |
-          cd publish || exit 1
-          git init
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release
-          git add .
-          git commit -m "Released RTA-SERVER on ${{ env.BUILDTIME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u origin release
+          id: ${{ steps.create_release.outputs.id }}
