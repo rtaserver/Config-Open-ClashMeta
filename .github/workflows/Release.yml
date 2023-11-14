@@ -48,17 +48,6 @@ jobs:
           r="${r//$'\n'/'### Created By : RizkiKotet'}"
           echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
 
-      - name: Create and Upload Release
-        id: upload_release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          release_name: Release ${{ env.BUILDTIME }}
-          tag: latest
-          overwrite: true
-          body: |
-            ${{ steps.read_release.outputs.RELEASE_BODY }}
-
       - name: Git push assets to "release" branch
         run: |
           cd publish || exit 1
