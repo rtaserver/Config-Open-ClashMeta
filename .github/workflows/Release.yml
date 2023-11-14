@@ -1,10 +1,10 @@
 # release action with semantic release
 name: Release
-
 on:
+  workflow_dispatch:
   push:
     branches:
-      - "master"
+      - master
 
 permissions:
   contents: write
@@ -28,6 +28,13 @@ jobs:
           timezoneLinux: "Asia/Jakarta"
           timezoneMacos: "Asia/Jakarta"
           timezoneWindows: "Indonesia Standard Time"
+
+      - name: Delete current release assets
+        uses: andreaswilli/delete-release-assets-action@v3.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest
+          deleteOnlyFromDrafts: false
 
       - name: Read release.md and use it as a body of new release
         id: read_release
