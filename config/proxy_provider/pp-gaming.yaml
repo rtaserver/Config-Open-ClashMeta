@@ -1,0 +1,12 @@
+# CONTOH FORMAT
+# https://blog.vpngame.com/openwrt/kumpulan-daftar-format-akun-untuk-openclash/
+proxies:
+  - name: TROJAN SNI
+    # interface-name: eth1
+    type: trojan
+    server: server.com
+    port: 443
+    password: PASSWORD
+    udp: true
+    sni: sni.com
+    skip-cert-verify: true
