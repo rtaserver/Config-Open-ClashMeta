@@ -23,23 +23,6 @@ Easy Setup Headless multi session Whatsapp Gateway with NodeJS.
 
 <p>
 
-<html>
-	<style>
-		button {
-			color: #ffffff;
-			background-color: #2d63c8;
-			font-size: 19px;
-			border: 1px solid #2d63c8;
-			padding: 15px 50px;
-			cursor: pointer
-		}
-		button:hover {
-			color: #2d63c8;
-			background-color: #ffffff;
-		}
-	</style>
-</html>
-
 <p align="center">
   <a href="https://github.com/rtaserver/Config-Open-ClashMeta/releases">
     <button type="button" name="myButton">Download Config</button>
