@@ -87,7 +87,7 @@ fallback-filter:
 
 ![img3](image/image-3.png)
 
-- Setting DNS / Bebas
+- Setting DNS / DNS Bebas
 
 | DNS Server Group | DNS Server Address            | DNS Server Port | DNS Server Type |
 | ---------------- | ----------------------------- | --------------- | --------------- |
