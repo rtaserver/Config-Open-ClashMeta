@@ -82,7 +82,7 @@ fallback-filter:
   - Country.mbb : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb
   - Geoip.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat
   - Geosite.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat
-#### JANGAN LUPA CHECK UPDATE UNTUK DOWNLOAD GEODATABASE
+#### JANGAN LUPA KLIK CHECK AND UPDATE UNTUK DOWNLOAD GEODATABASE
 
 ### Setting OpenClash 4
 
