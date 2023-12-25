@@ -14,7 +14,7 @@
 
 ## Features
 
-Easy Setup Headless multi session Whatsapp Gateway with NodeJS.
+Simpel Config Pisah Traffic OpenClash Meta Version
 
 - Pisah Trafik Gaming Online
 - Pisah Trafik Indo Only
@@ -29,65 +29,32 @@ Easy Setup Headless multi session Whatsapp Gateway with NodeJS.
   </a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/rtaserver/OpenClash/tree/package/master">
+    <button type="button" name="myButton">Download Latest OpenClash By RTA SERVER</button>
+  </a>
+</p>
+
 ## Documentation
 
-### Setting OpenClash 1
+### Overviews
 
-![Img](image/image.png)
+![Img](image/Overviews.png)
 
-### Setting OpenClash 2
+### Setting Configuration
 
-![img1](image/image-1.png)
+![img1](image/PluginsSettings-OperationMode.png)
 
-- Custom Fallback Filter
-
-```
-fallback-filter:
-  geoip: true
-  geoip-code: ID
-  ipcidr:
-    - 0.0.0.0/8
-    - 10.0.0.0/8
-    - 100.64.0.0/10
-    - 127.0.0.0/8
-    - 169.254.0.0/16
-    - 172.16.0.0/12
-    - 192.0.0.0/24
-    - 192.0.2.0/24
-    - 192.88.99.0/24
-    - 192.168.0.0/16
-    - 198.18.0.0/15
-    - 198.51.100.0/24
-    - 203.0.113.0/24
-    - 224.0.0.0/4
-    - 240.0.0.0/4
-    - 255.255.255.255/32
-  domain:
-    - "+.google.com"
-    - "+.facebook.com"
-    - "+.youtube.com"
-    - "+.githubusercontent.com"
-    - "+.googlevideo.com"
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
-    - msftconnecttest.com
-    - msftncsi.com
-```
-
-### Setting OpenClash 3
-
-![img2](image/image-2.png)
-
+![img2](image/PluginsSettings-GeoUpdate.png)
 - Setting Geodatabase
   - Country.mbb : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb
   - Geoip.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat
   - Geosite.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat
 #### JANGAN LUPA KLIK CHECK AND UPDATE UNTUK DOWNLOAD GEODATABASE
 
-### Setting OpenClash 4
+![img3](image/OverwriteSettings-DNS-Settings.png)
 
-![img3](image/image-3.png)
-
+![img4](image/OverwriteSettings-DNS-Settings-2.png)
 - Setting DNS / DNS Bebas
 
 | DNS Server Group | DNS Server Address            | DNS Server Port | DNS Server Type |
@@ -96,3 +63,16 @@ fallback-filter:
 | NameServer       | 8.8.4.4                       |                 | UDP             |
 | NameServer       | dns.adguard-dns.com/dns-query |                 | HTTPS           |
 | NameServer       | dns.adguard-dns.com           |                 | TLS             |
+
+![img5](image/OverwriteSettings-MetaSettings.png)
+
+### Yacd Overviews Configuration
+
+![img6](image/YacdView1.png)
+
+![img7](image/YacdView2.png)
+
+#### PADA BAGIAN PROXY GROUP GLOBAL PILIH `Traffic-Browsing`
+
+---
+
