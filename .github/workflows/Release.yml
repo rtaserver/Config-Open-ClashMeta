@@ -27,5 +27,5 @@ jobs:
           git checkout -b main
           git add .
           git commit -m "Released on ${{ env.BUILDTIME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}/config"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u origin main
