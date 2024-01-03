@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          repository: rtaserver/Config-Open-ClashMeta
       - name: Move and zip files
         run: |
           mkdir -p ./publish/
