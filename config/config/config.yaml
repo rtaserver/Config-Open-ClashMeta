@@ -1,4 +1,29 @@
 ---
+geox-url:
+  geoip: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb"
+geo-auto-update: true # Auto Update GEO DATABASE
+geo-update-interval: 24 # Interval /Hours
+external-ui: "/usr/share/openclash/ui"
+external-ui-name: xd
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+geodata-mode: true
+geodata-loader: memconservative
+tcp-concurrent: true
+keep-alive-interval: 1800
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+tun:
+  enable: true
+  stack: system
+  device: utun
+  auto-route: false
+  auto-detect-interface: false
+  dns-hijack:
+  - tcp://any:53
 port: 7890
 socks-port: 7891
 redir-port: 7892
@@ -22,20 +47,14 @@ dns:
   default-nameserver:
   - 8.8.8.8
   - 8.8.4.4
-  - 1.1.1.1
-  - 1.0.0.1
-  - 9.9.9.9
+  - tls://1.1.1.1:853
+  - tls://9.9.9.9:853
   nameserver:
-  - 1.1.1.1
   - 8.8.8.8
-  - 8.8.4.4
-  - 9.9.9.9
-  - https://dns.cloudflare.com/dns-query
-  - https://dns.google:853
-  fallback:
   - 1.1.1.1
-  - 8.8.8.8
-  - 9.9.9.9
+  - tls://8.8.8.8:853
+  - https://cloudflare-dns.com/dns-query
+  - quic://dns.adguard.com:784
 proxy-groups:
 - name: SERVER-BROWSING
   type: load-balance
@@ -214,20 +233,3 @@ rules:
 - AND,((RULE-SET,RP-Umum),(NETWORK,TCP)),Traffic-Browsing
 - AND,((RULE-SET,RP-Umum),(NETWORK,UDP)),Traffic-Browsing
 - MATCH,Traffic-Browsing
-external-ui: "/usr/share/openclash/ui"
-geodata-mode: true
-geodata-loader: memconservative
-tcp-concurrent: true
-keep-alive-interval: 1800
-sniffer:
-  enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
-tun:
-  enable: true
-  stack: system
-  device: utun
-  auto-route: false
-  auto-detect-interface: false
-  dns-hijack:
-  - tcp://any:53
