@@ -31,9 +31,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: ${{ env.BUILDTIME }}
-          push_options: '--force'
-          skip_dirty_check: true
+          commit_message: Auto Update
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
