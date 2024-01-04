@@ -35,9 +35,7 @@ jobs:
     
       - name: Move and zip files
         run: |
-          mkdir -p ./publish/
-          cd ./publish || exit 1
-          zip -r ConfigMeta.zip ../config
+          zip -r ConfigMeta.zip ./config
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
