@@ -53,4 +53,4 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./publish/*
+          file: ./ConfigMeta.zip
