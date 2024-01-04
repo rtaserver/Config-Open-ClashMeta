@@ -37,7 +37,7 @@ jobs:
         run: |
           mkdir -p ./publish/
           cd ./publish || exit 1
-          zip ConfigMeta.zip ../../*
+          zip -r ConfigMeta.zip ../*
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
