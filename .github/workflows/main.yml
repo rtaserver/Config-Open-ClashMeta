@@ -28,3 +28,21 @@ jobs:
           add_options: '-u'
           push_options: '--force'
           skip_dirty_check: true
+
+      - name: Delete current release assets
+        uses: andreaswilli/delete-release-assets-action@v3.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest
+          deleteOnlyFromDrafts: false
+
+      - name: Create and Upload Release
+        id: upload_release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: Config Clash Meta - Release ${{ env.BUILDTIME }}
+          tag: latest
+          file_glob: true
+          overwrite: true
+          file: ./*
