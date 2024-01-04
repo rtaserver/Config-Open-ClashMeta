@@ -11,6 +11,10 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Set variables
+        run: |
+          echo "BUILDTIME=$(TZ=Asia/Jakarta date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
+        shell: bash
       - uses: actions/checkout@v3
       - name: Update GeoData
         working-directory: ./config
@@ -24,7 +28,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Auto Update
+          commit_message: ${{ env.BUILDTIME }}
           push_options: '--force'
           skip_dirty_check: true
 
@@ -40,7 +44,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          release_name: Config Clash Meta - Release ${{ env.BUILDTIME }}
+          release_name: Config Clash Meta - ${{ env.BUILDTIME }}
           tag: latest
           file_glob: true
           overwrite: true
