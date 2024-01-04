@@ -29,15 +29,15 @@ jobs:
           echo "Downloading GeoSite.dat ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat -O GeoSite.dat
 
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Auto Update
+    
       - name: Move and zip files
         run: |
           mkdir -p ./publish/
           cd ./publish || exit 1
-          zip ConfigMeta.zip ../*
-
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Auto Update
+          zip ConfigMeta.zip ../../*
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
