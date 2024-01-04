@@ -29,6 +29,12 @@ jobs:
           echo "Downloading GeoSite.dat ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat -O GeoSite.dat
 
+      - name: Move and zip files
+        run: |
+          mkdir -p ./publish/
+          cd ./publish || exit 1
+          zip ConfigMeta.zip ./*
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Auto Update
@@ -49,4 +55,4 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./*
+          file: ./publish/*
