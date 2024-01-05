@@ -2,8 +2,13 @@ name: Geo Database
 
 on:
   schedule:
-    - cron: "40 22 * * *"
+    - cron: "00 19 * * *" # 02:00 GMT+7
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   build:
