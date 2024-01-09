@@ -59,3 +59,9 @@ jobs:
           file_glob: true
           overwrite: true
           file: ./ConfigMeta.zip
+          body: |
+            ### Config ClashMeta - RTA SERVER
+            Build date: ${{ env.BUILDTIME }}
+            See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
+            - Auto Update GeoIP
+            - Auto Update GeoSite
