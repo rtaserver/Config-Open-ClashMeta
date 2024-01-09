@@ -25,12 +25,12 @@ jobs:
         working-directory: ./config
         run : |
           rm -fr Country.mmdb
-          rm -fr GeoIp.dat
+          rm -fr GeoIP.dat
           rm -fr GeoSite.dat
           echo "Downloading Country.mmdb ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb -O Country.mmdb
           echo "Downloading GeoIp.dat ..."
-          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat -O GeoIp.dat
+          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat -O GeoIP.dat
           echo "Downloading GeoSite.dat ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat -O GeoSite.dat
 
