@@ -36,7 +36,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Auto Update
+          commit_message: "Build date: ${{ env.BUILDTIME }}"
     
       - name: Move and zip files
         run: |
