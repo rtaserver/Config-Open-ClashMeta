@@ -2,8 +2,13 @@ name: Geo Database
 
 on:
   schedule:
-    - cron: "40 22 * * *"
+    - cron: "00 19 * * *" # 02:00 GMT+7
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
 
 jobs:
   build:
@@ -19,18 +24,23 @@ jobs:
       - name: Update GeoData
         working-directory: ./config
         run : |
+          rm -fr Country.mmdb
+          rm -fr GeoIP.dat
+          rm -fr GeoSite.dat
           echo "Downloading Country.mmdb ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb -O Country.mmdb
           echo "Downloading GeoIp.dat ..."
-          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat -O GeoIp.dat
+          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat -O GeoIP.dat
           echo "Downloading GeoSite.dat ..."
           wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat -O GeoSite.dat
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: ${{ env.BUILDTIME }}
-          push_options: '--force'
-          skip_dirty_check: true
+          commit_message: "Build date: ${{ env.BUILDTIME }}"
+    
+      - name: Move and zip files
+        run: |
+          zip -r ConfigMeta.zip ./config
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
@@ -48,4 +58,10 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./*
+          file: ./ConfigMeta.zip
+          body: |
+            ### Config ClashMeta - RTA SERVER
+            Build date: ${{ env.BUILDTIME }}
+            See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
+            - Auto Update GeoIP
+            - Auto Update GeoSite
