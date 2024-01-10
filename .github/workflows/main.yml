@@ -9,8 +9,8 @@ on:
       - main
     paths-ignore:
       - "**/README.md"
-      - "main.yml"
-      - "delete.yml"
+      - "**/.github/workflows/main.yml"
+      - "**/.github/workflows/delete.yml"
 
 jobs:
   build:
