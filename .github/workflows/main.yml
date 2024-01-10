@@ -9,6 +9,8 @@ on:
       - main
     paths-ignore:
       - "**/README.md"
+      - "/main.yml"
+      - "/delete.yml"
 
 jobs:
   build:
