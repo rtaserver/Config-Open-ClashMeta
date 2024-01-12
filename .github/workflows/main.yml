@@ -21,7 +21,6 @@ jobs:
       - name: Set variables
         run: |
           echo "BUILDTIME=$(TZ=Asia/Jakarta date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
-          echo "Emoji=$('🎉' '🤞' '✨' '🎁' '🎈' '🎄' '🎨' '💋' '🍓' '🍕' '🍉' '💐' '🌴' '🚀' '🛸' '🗽' '⛅' '🌈' '🔥' '⛄' '🐶' '🏅' '🦄' '🐤')" >> $GITHUB_ENV
         shell: bash
       - uses: actions/checkout@v3
       - name: Update GeoData
@@ -39,7 +38,7 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "${env.Emoji[$[$RANDOM % ${#env.Emoji[@]}]]} Sync: ${{ env.BUILDTIME }}"
+          commit_message: "🎉 Sync: ${{ env.BUILDTIME }}"
     
       - name: Move and zip files
         run: |
