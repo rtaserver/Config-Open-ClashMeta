@@ -68,7 +68,7 @@ jobs:
             - Auto Update GeoIP
             - Auto Update GeoSite
 
-      - name: send photo message
+      - name: Send Telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
