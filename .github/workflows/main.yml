@@ -42,7 +42,7 @@ jobs:
     
       - name: Move and zip files
         run: |
-          zip -r ConfigMeta.zip ./config
+          tar -zcvf ConfigMeta-Backup.tar.gz ./config
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
@@ -60,13 +60,27 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./ConfigMeta.zip
+          file: ./ConfigMeta-Backup.tar.gz
           body: |
-            ### Config ClashMeta - RTA SERVER
+            ### Update Config ClashMeta - RTA SERVER
             Build date: ${{ env.BUILDTIME }}
             See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
             - Auto Update GeoIP
             - Auto Update GeoSite
+
+      - name: send photo message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ./ConfigMeta-Backup.tar.gz
+          message: |
+            ### Update Config ClashMeta - RTA SERVER
+            Build date: ${{ env.BUILDTIME }}
+            See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
+            - Auto Update GeoIP
+            - Auto Update GeoSite
+    
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
         continue-on-error: true
