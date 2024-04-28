@@ -61,7 +61,7 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./ConfigMeta-Backup.tar.gz
+          file: ./config/ConfigMeta-Backup.tar.gz
           body: |
             ### Update Config ClashMeta - RTA SERVER
             Build date: ${{ env.BUILDTIME }}
