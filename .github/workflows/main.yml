@@ -41,9 +41,8 @@ jobs:
           commit_message: "🎉 Sync: ${{ env.BUILDTIME }}"
     
       - name: Move and zip files
-        working-directory: ./config
         run: |
-          tar -zcvf ConfigMeta-Backup.tar.gz ./*
+          zip -r ConfigMeta.zip ./config
 
       - name: Delete current release assets
         uses: andreaswilli/delete-release-assets-action@v3.0.0
@@ -61,7 +60,7 @@ jobs:
           tag: latest
           file_glob: true
           overwrite: true
-          file: ./config/ConfigMeta-Backup.tar.gz
+          file: ./ConfigMeta.zip
           body: |
             ### Update Config ClashMeta - RTA SERVER
             Build date: ${{ env.BUILDTIME }}
