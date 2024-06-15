@@ -1,13 +1,13 @@
 ---
 geox-url:
-  geoip: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb"
-geo-auto-update: true # Auto Update GEO DATABASE
-geo-update-interval: 24 # Interval /Hours
+  geoip: https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat
+  geosite: https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb
+geo-auto-update: true
+geo-update-interval: 24
 external-ui: "/usr/share/openclash/ui"
 external-ui-name: xd
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
 geodata-mode: true
 geodata-loader: memconservative
 tcp-concurrent: true
@@ -29,19 +29,20 @@ socks-port: 7891
 redir-port: 7892
 mixed-port: 7893
 tproxy-port: 7895
-ipv6: false
+ipv6: true
 mode: rule
 log-level: silent
 allow-lan: true
 external-controller: 0.0.0.0:9090
-secret: "rizkikotet"
+secret: rizkikotet
 bind-address: "*"
 unified-delay: true
 profile:
   store-selected: true
+  store-fake-ip: true
 dns:
   enable: true
-  ipv6: false
+  ipv6: true
   enhanced-mode: redir-host
   listen: 0.0.0.0:7874
   default-nameserver:
@@ -49,12 +50,17 @@ dns:
   - 8.8.4.4
   - tls://1.1.1.1:853
   - tls://9.9.9.9:853
+  - 1.1.1.1
   nameserver:
   - 8.8.8.8
+  - 8.8.4.4
   - 1.1.1.1
-  - tls://8.8.8.8:853
+  - 1.0.0.1
   - https://cloudflare-dns.com/dns-query
-  - quic://dns.adguard.com:784
+  - https://dns.google/dns-query
+  fallback:
+  - 8.8.8.8
+  - https://dns.google/dns-query
 proxy-groups:
 - name: SERVER-BROWSING
   type: load-balance
@@ -79,10 +85,8 @@ proxy-groups:
   - DIRECT-ISP1
   - DIRECT-ISP2
   - DIRECT-LB
-  use:
-  - PP-Game
-  - PP-Indo
-  - PP-Browsing
+  - Traffic-Indo
+  - Traffic-Browsing
 - name: Traffic-Gaming
   type: select
   disable-udp: false
@@ -92,8 +96,6 @@ proxy-groups:
   - DIRECT-LB
   use:
   - PP-Game
-  - PP-Indo
-  - PP-Browsing
 - name: Traffic-Gaming-Port
   type: select
   disable-udp: false
@@ -103,10 +105,8 @@ proxy-groups:
   - DIRECT-LB
   use:
   - PP-Game
-  - PP-Indo
-  - PP-Browsing
 - name: Traffic-Indo
-  type: fallback
+  type: select
   disable-udp: false
   proxies:
   - SERVER-ID
@@ -114,7 +114,7 @@ proxy-groups:
   url: http://www.gstatic.com/generate_204
   interval: '30'
 - name: Traffic-Browsing
-  type: fallback
+  type: select
   disable-udp: false
   proxies:
   - SERVER-BROWSING
@@ -150,7 +150,7 @@ proxy-groups:
   - DIRECT-ISP1
   - DIRECT-ISP2
   url: http://www.gstatic.com/generate_204
-  interval: "360"
+  interval: '360'
 - name: DIRECT-ISP1
   interface-name: eth1
   type: select
@@ -206,6 +206,9 @@ rules:
 - DST-PORT,7895,REJECT
 - DST-PORT,7892,REJECT
 - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+- DST-PORT,7895,REJECT
+- DST-PORT,7892,REJECT
+- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
 - DST-PORT,123/136/137-139,Traffic-Direct,udp
 - RULE-SET,RP-Direct,Traffic-Direct
 - RULE-SET,RP-Reject,Traffic-Manual-Reject
@@ -217,6 +220,9 @@ rules:
 - GEOSITE,GOOGLE,Traffic-Browsing
 - AND,((NETWORK,TCP),(DST-PORT,5228-5230),(OR,((DOMAIN-KEYWORD,google)))),Traffic-Browsing
 - AND,((NETWORK,UDP),(DST-PORT,5228-5230),(OR,((DOMAIN-KEYWORD,google)))),Traffic-Browsing
+- GEOSITE,rule-gaming,Traffic-Gaming
+- AND,((NOT,((RULE-SET,RP-Umum))),(NETWORK,TCP)),Traffic-Gaming-Port
+- AND,((NOT,((RULE-SET,RP-Umum))),(NETWORK,UDP)),Traffic-Gaming-Port
 - GEOSITE,rule-indo,Traffic-Indo
 - GEOSITE,rule-sosmed,Traffic-Indo
 - GEOSITE,rule-streaming,Traffic-Indo
@@ -226,9 +232,6 @@ rules:
 - GEOIP,telegram,Traffic-Indo
 - GEOIP,twitter,Traffic-Indo
 - RULE-SET,RP-Indo,Traffic-Indo
-- GEOSITE,rule-gaming,Traffic-Gaming
-- AND,((NOT,((RULE-SET,RP-Umum))),(NETWORK,TCP)),Traffic-Gaming-Port
-- AND,((NOT,((RULE-SET,RP-Umum))),(NETWORK,UDP)),Traffic-Gaming-Port
 - GEOSITE,rule-speedtest,Traffic-Browsing
 - AND,((RULE-SET,RP-Umum),(NETWORK,TCP)),Traffic-Browsing
 - AND,((RULE-SET,RP-Umum),(NETWORK,UDP)),Traffic-Browsing
