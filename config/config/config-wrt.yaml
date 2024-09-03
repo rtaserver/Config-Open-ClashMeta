@@ -58,9 +58,9 @@ dns:
   - 1.0.0.1
   - https://cloudflare-dns.com/dns-query
   - https://dns.google/dns-query
-  fallback:
-  - 8.8.8.8
-  - https://dns.google/dns-query
+#  fallback:
+#  - 8.8.8.8
+#  - https://dns.google/dns-query
 proxy-groups:
 - name: SERVER-BROWSING
   type: load-balance
@@ -82,39 +82,43 @@ proxy-groups:
   type: select
   disable-udp: false
   proxies:
-  - DIRECT
+  - DIRECT-LB
   - Traffic-Indo
   - Traffic-Browsing
+  use:
+  - PP-Direct
 - name: Traffic-Gaming
   type: select
   disable-udp: false
   proxies:
-  - DIRECT
+  - DIRECT-LB
   use:
   - PP-Game
+  - PP-Direct
 - name: Traffic-Gaming-Port
   type: select
   disable-udp: false
   proxies:
-  - DIRECT
+  - DIRECT-LB
   use:
   - PP-Game
-- name: Traffic-Indo
-  type: select
-  disable-udp: false
-  proxies:
-  - SERVER-ID
-  - SERVER-BROWSING
-  url: http://www.gstatic.com/generate_204
-  interval: '30'
+  - PP-Direct
 - name: Traffic-Browsing
-  type: select
+  type: fallback
   disable-udp: false
   proxies:
   - SERVER-BROWSING
   - SERVER-ID
   url: http://www.gstatic.com/generate_204
-  interval: '30'
+  interval: '60'
+- name: Traffic-Indo
+  type: fallback
+  disable-udp: false
+  proxies:
+  - SERVER-ID
+  - SERVER-BROWSING
+  url: http://www.gstatic.com/generate_204
+  interval: '60'
 - name: Traffic-Manual-Reject
   type: select
   disable-udp: false
@@ -136,6 +140,14 @@ proxy-groups:
   - REJECT
   - Traffic-Browsing
   - Traffic-Indo
+- name: DIRECT-LB
+  type: load-balance
+  strategy: round-robin
+  disable-udp: false
+  use:
+  - PP-Direct
+  url: http://www.gstatic.com/generate_204
+  interval: '360'
 proxy-providers:
   PP-Indo:
     type: file
@@ -158,6 +170,13 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 180
+  PP-Direct:
+    type: file
+    path: "./proxy_provider/pp-direct.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 180
 rule-providers:
   RP-Direct:
     type: file
@@ -176,12 +195,6 @@ rule-providers:
     behavior: classical
     path: "./rule_provider/rp-indo.yaml"
 rules:
-- DST-PORT,7895,REJECT
-- DST-PORT,7892,REJECT
-- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
-- DST-PORT,7895,REJECT
-- DST-PORT,7892,REJECT
-- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
 - DST-PORT,123/136/137-139,Traffic-Direct,udp
 - RULE-SET,RP-Direct,Traffic-Direct
 - RULE-SET,RP-Reject,Traffic-Manual-Reject
