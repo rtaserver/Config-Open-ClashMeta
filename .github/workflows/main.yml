@@ -39,17 +39,17 @@ jobs:
           chmod +x GeoIP.dat
           chmod +x GeoSite.dat
 
-          chmod +x /config/config-wrt.yaml
+          chmod +x ./config/config-wrt.yaml
           
-          chmod +x /proxy_provider/pp-browsing.yaml
-          chmod +x /proxy_provider/pp-direct.yaml
-          chmod +x /proxy_provider/pp-gaming.yaml
-          chmod +x /proxy_provider/pp-indo.yaml
+          chmod +x ./proxy_provider/pp-browsing.yaml
+          chmod +x ./proxy_provider/pp-direct.yaml
+          chmod +x ./proxy_provider/pp-gaming.yaml
+          chmod +x ./proxy_provider/pp-indo.yaml
           
-          chmod +x /rule_provider/rp-direct.yaml
-          chmod +x /rule_provider/rp-indo.yaml
-          chmod +x /rule_provider/rp-reject.yaml
-          chmod +x /rule_provider/rp-umum.yaml
+          chmod +x ./rule_provider/rp-direct.yaml
+          chmod +x ./rule_provider/rp-indo.yaml
+          chmod +x ./rule_provider/rp-reject.yaml
+          chmod +x ./rule_provider/rp-umum.yaml
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
