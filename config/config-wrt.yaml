@@ -205,6 +205,9 @@ rule-providers:
     behavior: classical
     path: "./rule_provider/rp-indo.yaml"
 rules:
+- DST-PORT,7895,REJECT
+- DST-PORT,7892,REJECT
+- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
 - DST-PORT,123/136/137-139,Traffic-Direct,udp
 - RULE-SET,RP-Direct,Traffic-Direct
 - RULE-SET,RP-Reject,Traffic-Manual-Reject
