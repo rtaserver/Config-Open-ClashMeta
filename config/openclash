@@ -137,8 +137,8 @@ config dns_servers
 
 config dns_servers
 	option group 'nameserver'
-	option type 'udp'
-	option ip '9.9.9.9'
+	option type 'https'
+	option ip 'dns.cloudflare.com/dns-query'
 	option enabled '1'
 	option node_resolve '1'
 	option specific_group 'Disable'
