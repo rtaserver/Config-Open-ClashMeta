@@ -29,48 +29,27 @@ Simpel Config Pisah Traffic OpenClash Meta Version
   </a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/rtaserver/OpenClash/tree/package/master">
-    <button type="button" name="myButton">Download Latest OpenClash By RTA SERVER</button>
-  </a>
-</p>
-
 ## Documentation
 
 ### Overviews
 
 ![Img](image/Overviews.png)
 
-### Setting Configuration
+### Setting Configuration DNS
+* NOTES : `DNS Provider Khusus Nol Kuota`
+  * `112.215.198.248` : DNS XL
+  * `112.215.198.254` : DNS XL
+* Silahkan Ganti Dengan DNS Provider / DNS Global
+* Contoh :
+  * `1.1.1.1` : Cloudflare
+  * `8.8.8.8` : Google
+  * `9.9.9.9` : Quad9
 
-![img1](image/PluginsSettings-OperationMode.png)
-
-![img2](image/PluginsSettings-GeoUpdate.png)
-- Setting Geodatabase
-  - Country.mbb : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb
-  - Geoip.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat
-  - Geosite.dat : https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat
-#### JANGAN LUPA KLIK CHECK AND UPDATE UNTUK DOWNLOAD GEODATABASE
-
-![img3](image/OverwriteSettings-DNS-Settings.png)
-
-![img4](image/OverwriteSettings-DNS-Settings-2.png)
-- Setting DNS / DNS Bebas
-
-| DNS Server Group | DNS Server Address            | DNS Server Port | DNS Server Type |
-| ---------------- | ----------------------------- | --------------- | --------------- |
-| NameServer       | 8.8.8.8                       |                 | UDP             |
-| NameServer       | 8.8.4.4                       |                 | UDP             |
-| NameServer       | dns.adguard-dns.com/dns-query |                 | HTTPS           |
-| NameServer       | dns.adguard-dns.com           |                 | TLS             |
-
-![img5](image/OverwriteSettings-MetaSettings.png)
+![img1](image/DNS.png)
 
 ### Yacd Overviews Configuration
 
-![img6](image/YacdView1.png)
-
-![img7](image/YacdView2.png)
+![img6](image/Yacd.png)
 
 #### PADA BAGIAN PROXY GROUP GLOBAL PILIH `Traffic-Browsing`
 
