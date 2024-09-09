@@ -1,3 +1,6 @@
+#==========================================================================
+# RTASERVER - CLASH META CONFIG
+#==========================================================================
 ---
 geox-url:
   geoip: https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat
@@ -6,8 +9,6 @@ geox-url:
 geo-auto-update: true
 geo-update-interval: 24
 external-ui: "/usr/share/openclash/ui"
-external-ui-name: xd
-external-ui-url: https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
 geodata-mode: true
 geodata-loader: memconservative
 tcp-concurrent: true
@@ -55,11 +56,13 @@ dns:
   fake-ip-filter:
   - "*.lan"
   nameserver:
-  - 1.1.1.1#Traffic-Indo
-  - 8.8.8.8#Traffic-Indo
-  - https://dns.cloudflare.com/dns-query#Traffic-Indo
+  - 119.29.29.29#DNS-SETTING
+  - 8.8.8.8#DNS-SETTING
+  - 1.1.1.1#DNS-SETTING
   fallback:
-  - 8.8.8.8#SERVER-BROWSING
+  - 119.29.29.29#DNS-SETTING
+  - 8.8.8.8#DNS-SETTING
+  - 1.1.1.1#DNS-SETTING
   proxy-server-nameserver:
   - 112.215.198.248
   - 112.215.198.254
@@ -92,22 +95,43 @@ dns:
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
 proxy-groups:
+#==========================================================================
+# DNS SETTING
+#==========================================================================
+- name: DNS-SETTING
+  type: select
+  disable-udp: false
+  use:
+  - PP-Direct
+  - PP-Browsing
+  - PP-Indo
+#==========================================================================
+# SERVER PROXIES
+#==========================================================================
 - name: SERVER-BROWSING
-  type: load-balance
-  strategy: round-robin
+  type: fallback
   disable-udp: false
   use:
   - PP-Browsing
   url: http://cp.cloudflare.com/generate_204
   interval: 180
 - name: SERVER-ID
-  type: load-balance
-  strategy: round-robin
+  type: fallback
   disable-udp: false
   use:
   - PP-Indo
   url: http://cp.cloudflare.com/generate_204
   interval: 180
+- name: SERVER-GAME
+  type: fallback
+  disable-udp: false
+  use:
+  - PP-Game
+  url: http://cp.cloudflare.com/generate_204
+  interval: 180
+#==========================================================================
+# MAIN GROUPS
+#==========================================================================
 - name: Traffic-Direct
   type: select
   disable-udp: false
@@ -122,16 +146,16 @@ proxy-groups:
   disable-udp: false
   proxies:
   - DIRECT-LB
+  - SERVER-GAME
   use:
-  - PP-Game
   - PP-Direct
 - name: Traffic-Gaming-Port
   type: select
   disable-udp: false
   proxies:
   - DIRECT-LB
+  - SERVER-GAME
   use:
-  - PP-Game
   - PP-Direct
 - name: Traffic-Browsing
   type: fallback
@@ -170,6 +194,9 @@ proxy-groups:
   - REJECT
   - Traffic-Browsing
   - Traffic-Indo
+#==========================================================================
+# LOAD-BALANCE DIRECT SETTINGS
+#==========================================================================
 - name: DIRECT-LB
   type: load-balance
   strategy: round-robin
@@ -178,6 +205,8 @@ proxy-groups:
   - PP-Direct
   url: http://cp.cloudflare.com/generate_204
   interval: 180
+#==========================================================================
+#==========================================================================
 proxy-providers:
   PP-Indo:
     type: file
@@ -207,6 +236,8 @@ proxy-providers:
       enable: true
       url: http://www.gstatic.com/generate_204
       interval: 180
+#==========================================================================
+#==========================================================================
 rule-providers:
   RP-Direct:
     type: file
@@ -224,6 +255,9 @@ rule-providers:
     type: file
     behavior: classical
     path: "./rule_provider/rp-indo.yaml"
+#==========================================================================
+# MAIN RULE
+#==========================================================================
 rules:
 - DST-PORT,123/136/137-139,Traffic-Direct,udp
 - RULE-SET,RP-Direct,Traffic-Direct
@@ -252,3 +286,4 @@ rules:
 - AND,((RULE-SET,RP-Umum),(NETWORK,TCP)),Traffic-Browsing
 - AND,((RULE-SET,RP-Umum),(NETWORK,UDP)),Traffic-Browsing
 - MATCH,Traffic-Browsing
+#==========================================================================

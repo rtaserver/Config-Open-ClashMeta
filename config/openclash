@@ -88,7 +88,6 @@ config openclash 'config'
 	option auto_restart '0'
 	option auto_restart_week_time '1'
 	option auto_restart_day_time '0'
-	option proxy_dns_group 'SERVER-BROWSING'
 	option enable_tcp_concurrent '1'
 	option enable_unified_delay '1'
 	option keep_alive_interval '1800'
@@ -103,6 +102,7 @@ config openclash 'config'
 	option config_reload '1'
 	option dnsmasq_resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
 	option dnsmasq_noresolv '0'
+	option proxy_dns_group 'DNS-SETTING'
 	option dnsmasq_cachesize '1000'
 
 config dns_servers
@@ -111,6 +111,7 @@ config dns_servers
 	option enabled '1'
 	option group 'default'
 	option node_resolve '1'
+	option interface 'Disable'
 
 config dns_servers
 	option type 'udp'
@@ -118,6 +119,25 @@ config dns_servers
 	option enabled '1'
 	option group 'default'
 	option node_resolve '1'
+	option interface 'Disable'
+
+config dns_servers
+	option group 'nameserver'
+	option type 'udp'
+	option ip '119.29.29.29'
+	option enabled '1'
+	option node_resolve '0'
+	option interface 'Disable'
+	option specific_group 'DNS-SETTING'
+
+config dns_servers
+	option group 'nameserver'
+	option type 'udp'
+	option ip '8.8.8.8'
+	option enabled '1'
+	option node_resolve '0'
+	option interface 'Disable'
+	option specific_group 'DNS-SETTING'
 
 config dns_servers
 	option group 'nameserver'
@@ -125,33 +145,32 @@ config dns_servers
 	option ip '1.1.1.1'
 	option enabled '1'
 	option node_resolve '0'
-	option specific_group 'Traffic-Indo'
 	option interface 'Disable'
-
-config dns_servers
-	option group 'nameserver'
-	option type 'udp'
-	option ip '8.8.8.8'
-	option enabled '1'
-	option node_resolve '0'
-	option specific_group 'Traffic-Indo'
-	option interface 'Disable'
-
-config dns_servers
-	option group 'nameserver'
-	option type 'https'
-	option ip 'dns.cloudflare.com/dns-query'
-	option enabled '1'
-	option node_resolve '0'
-	option specific_group 'Traffic-Indo'
-	option interface 'Disable'
-	option http3 '0'
+	option specific_group 'DNS-SETTING'
 
 config dns_servers
 	option enabled '1'
 	option group 'fallback'
-	option ip '8.8.8.8'
+	option ip '119.29.29.29'
 	option type 'udp'
+	option interface 'Disable'
+	option node_resolve '0'
+	option specific_group 'Disable'
+
+config dns_servers
+	option enabled '1'
+	option group 'fallback'
+	option type 'udp'
+	option interface 'Disable'
+	option node_resolve '0'
+	option specific_group 'Disable'
+	option ip '8.8.8.8'
+
+config dns_servers
+	option enabled '1'
+	option group 'fallback'
+	option type 'udp'
+	option ip '1.1.1.1'
 	option interface 'Disable'
 	option node_resolve '0'
 	option specific_group 'Disable'
