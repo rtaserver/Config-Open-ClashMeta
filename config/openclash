@@ -41,7 +41,7 @@ config openclash 'config'
 	option log_size '1024'
 	option tolerance '100'
 	option store_fakeip '0'
-	option custom_fallback_filter '0'
+	option custom_fallback_filter '1'
 	option custom_fakeip_filter '0'
 	option custom_host '0'
 	option custom_name_policy '0'
@@ -107,32 +107,34 @@ config openclash 'config'
 
 config dns_servers
 	option type 'udp'
-	option ip '1.1.1.1'
+	option ip '112.215.198.248'
 	option enabled '1'
 	option group 'default'
+	option node_resolve '1'
 
 config dns_servers
 	option type 'udp'
-	option ip '1.0.0.1'
+	option ip '112.215.198.254'
 	option enabled '1'
 	option group 'default'
+	option node_resolve '1'
 
 config dns_servers
 	option group 'nameserver'
 	option type 'udp'
 	option ip '1.1.1.1'
 	option enabled '1'
-	option node_resolve '1'
-	option specific_group 'Disable'
+	option node_resolve '0'
+	option specific_group 'Traffic-Indo'
 	option interface 'Disable'
 
 config dns_servers
 	option group 'nameserver'
 	option type 'udp'
-	option ip '1.0.0.1'
+	option ip '8.8.8.8'
 	option enabled '1'
-	option node_resolve '1'
-	option specific_group 'Disable'
+	option node_resolve '0'
+	option specific_group 'Traffic-Indo'
 	option interface 'Disable'
 
 config dns_servers
@@ -140,13 +142,17 @@ config dns_servers
 	option type 'https'
 	option ip 'dns.cloudflare.com/dns-query'
 	option enabled '1'
-	option node_resolve '1'
-	option specific_group 'Disable'
+	option node_resolve '0'
+	option specific_group 'Traffic-Indo'
 	option interface 'Disable'
+	option http3 '0'
 
 config dns_servers
 	option enabled '1'
 	option group 'fallback'
-	option ip '9.9.9.9'
+	option ip '8.8.8.8'
 	option type 'udp'
+	option interface 'Disable'
+	option node_resolve '0'
+	option specific_group 'Disable'
 
