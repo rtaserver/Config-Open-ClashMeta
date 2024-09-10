@@ -16,6 +16,8 @@
 
 Simpel Config Pisah Traffic OpenClash Meta Version
 
+- Fast Connect
+- Anti Leaked
 - Pisah Trafik Gaming Online
 - Pisah Trafik Indo Only
 - Adblock
@@ -47,11 +49,25 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 
 ![img1](image/DNS.png)
 
+* Jika Ingin Menambahkan DNS Baru
+
+![img1](image/Add-DNS.png)
+
 ### Yacd Overviews Configuration
+
+* Setting DNS Di Yacd
+  * `Jika Dari ISP / MODEM` `DNS Leaked`. Tapi Fast Connect
+  * `Jika Dari SERVER` `DNS Anti Leaked`. Tapi Butuh Beberapa Detik Baru Internet Jalan
+* `NOTES` : Leaked Di Atas Tergantung Saat Pengisian DNS Di `Default-NameServer`
+  * Silahkan Cek Di Atas Fungsinya
+
+![img1](image/DNS-SET.png)
+
+* Setting Global Proxy
+  * `Traffic-Browsing`
 
 ![img6](image/Yacd.png)
 
-#### PADA BAGIAN PROXY GROUP GLOBAL PILIH `Traffic-Browsing`
 
 ---
 

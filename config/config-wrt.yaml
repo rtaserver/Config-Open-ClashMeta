@@ -99,6 +99,8 @@ proxy-groups:
   - PP-Direct
   - PP-Browsing
   - PP-Indo
+  url: http://cp.cloudflare.com/generate_204
+  interval: 30
 - name: SERVER-BROWSING
   type: fallback
   disable-udp: false
