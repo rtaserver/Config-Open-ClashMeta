@@ -32,7 +32,7 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 </p>
 
 ## Documentation
-
+- For MihomoTProxy : ```bash -c "$(wget -qO - 'https://raw.githubusercontent.com/rtaserver/Config-Open-ClashMeta/main/mihomobackup.sh')"```
 ### Overviews
 
 ![Img](image/Overviews.png)
