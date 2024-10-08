@@ -2,7 +2,7 @@
 
 cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
 
-echo "Script Version: 1.4"
+echo "Script Version: 1.5"
 sleep 3
 clear
 
@@ -77,13 +77,17 @@ while true; do
             mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb && chmod +x /etc/mihomo/run/Country.mmdb
             mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat && chmod +x /etc/mihomo/run/GeoIP.dat
             mv -f config/GeoSite.dat /etc/mihomo/run/GeoSite.dat && chmod +x /etc/mihomo/run/GeoSite.dat
-            mv -f config/proxy_provider /etc/mihomo/run/proxy_provider && chmod +x /etc/mihomo/run/proxy_provider/*
-            mv -f config/rule_provider /etc/mihomo/run/rule_provider && chmod +x /etc/mihomo/run/rule_provider/*
+            mv -fT config/proxy_provider /etc/mihomo/run/proxy_provider && chmod +x /etc/mihomo/run/proxy_provider/*
+            mv -fT config/rule_provider /etc/mihomo/run/rule_provider && chmod +x /etc/mihomo/run/rule_provider/*
             mv -f configmihomo/cache.db /etc/mihomo/run/cache.db && chmod +x /etc/mihomo/run/cache.db
             mv -f configmihomo/config-wrt.yaml /etc/mihomo/profiles/config-wrt.yaml && chmod +x /etc/mihomo/profiles/config-wrt.yaml
             mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml && chmod +x /etc/mihomo/run/config.yaml
             mv -f configmihomo/mihomo /etc/config/mihomo
             rm -rf /tmp/Config-Open-ClashMeta-main
+            wget -O gh-pages.zip https://mirror.ghproxy.com/https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
+            unzip -o /tmp/gh-pages.zip -d /tmp  # Use -o to overwrite existing files
+            rm -rf /tmp/gh-pages.zip
+            mv -fT /tmp/Yacd-meta-gh-pages /etc/mihomo/run/ui/dashboard
             echo "Installation completed successfully!"
             sleep 3
             ;;
