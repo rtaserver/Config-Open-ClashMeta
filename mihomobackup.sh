@@ -10,6 +10,9 @@ clone_gh() {
 }
 
 cd /tmp
+echo "Script Version: 1.1"
+sleep 3
+clear
 while true; do
     clear
     echo "================================================"
