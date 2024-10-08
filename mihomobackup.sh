@@ -39,7 +39,7 @@ while true; do
             echo "Backup Full Config..."
             sleep 2
             current_time=$(date +"%Y-%m-%d_%H-%M-%S")
-            output_tar_gz="backup_config_mihomo_${current_time}.tar.gz"
+            output_tar_gz="/root/backup_config_mihomo_${current_time}.tar.gz"
             files_to_backup=(
                 "/etc/mihomo/mixin.yaml"
                 "/etc/mihomo/prifiles"
