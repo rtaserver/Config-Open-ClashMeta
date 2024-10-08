@@ -84,6 +84,8 @@ while true; do
             mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml && chmod +x /etc/mihomo/run/config.yaml
             mv -f configmihomo/mihomo /etc/config/mihomo
             rm -rf /tmp/Config-Open-ClashMeta-main
+            clear
+            echo "Download Dashboard Yacd"
             wget -O gh-pages.zip https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
             unzip -o /tmp/gh-pages.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/gh-pages.zip
