@@ -2,7 +2,7 @@
 
 cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
 
-echo "Script Version: 1.5"
+echo "Script Version: 1.6"
 sleep 3
 clear
 
@@ -86,6 +86,7 @@ while true; do
             rm -rf /tmp/Config-Open-ClashMeta-main
             clear
             echo "Download Dashboard Yacd"
+            sleep 2
             wget -O gh-pages.zip https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
             unzip -o /tmp/gh-pages.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/gh-pages.zip
