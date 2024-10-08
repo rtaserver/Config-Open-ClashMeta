@@ -38,7 +38,7 @@ while true; do
             output_tar_gz="/root/backup_config_mihomo_${current_time}.tar.gz"
             files_to_backup=(
                 "/etc/mihomo/mixin.yaml"
-                "/etc/mihomo/prifiles"
+                "/etc/mihomo/profiles"
                 "/etc/mihomo/run"
                 "/etc/config/mihomo"
             )
@@ -80,7 +80,7 @@ while true; do
             mv -f config/proxy_provider /etc/mihomo/run/proxy_provider && chmod +x /etc/mihomo/run/proxy_provider/*
             mv -f config/rule_provider /etc/mihomo/run/rule_provider && chmod +x /etc/mihomo/run/rule_provider/*
             mv -f configmihomo/cache.db /etc/mihomo/run/cache.db && chmod +x /etc/mihomo/run/cache.db
-            mv -f configmihomo/config-wrt.yaml /etc/mihomo/prifiles/config-wrt.yaml && chmod +x /etc/mihomo/prifiles/config-wrt.yaml
+            mv -f configmihomo/config-wrt.yaml /etc/mihomo/profiles/config-wrt.yaml && chmod +x /etc/mihomo/profiles/config-wrt.yaml
             mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml && chmod +x /etc/mihomo/run/config.yaml
             mv -f configmihomo/mihomo /etc/config/mihomo
             rm -rf /tmp/Config-Open-ClashMeta-main
