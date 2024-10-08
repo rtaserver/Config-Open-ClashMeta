@@ -10,7 +10,7 @@ clone_gh() {
 }
 
 cd /tmp
-echo "Script Version: 1.1"
+echo "Script Version: 1.2"
 sleep 3
 clear
 while true; do
@@ -76,7 +76,9 @@ while true; do
             echo "Download Full Backup Config By RTA-WRT"
             sleep 2
             wget -O main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
-            uzip /tmp/main.zip && rm -rf /tmp/main.zip && cd /tmp/Config-Open-ClashMeta-main
+            unzip /tmp/main.zip
+            rm -rf /tmp/main.zip
+            cd /tmp/Config-Open-ClashMeta-main
             cd /tmp/cfgmihomo
             mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb
             mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat
