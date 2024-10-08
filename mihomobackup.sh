@@ -1,8 +1,27 @@
 #!/bin/bash
 
-cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
+# Define a lock file
+LOCKFILE="/tmp/mihomotproxy.lock"
 
-echo "Script Version: 1.6"
+# Function to remove the lock file on exit
+cleanup() {
+    rm -f "$LOCKFILE"
+    exit
+}
+
+# Check if the lock file exists
+if [ -e "$LOCKFILE" ]; then
+    echo "Script is already running. Exiting..."
+    exit 1
+else
+    # Create a lock file
+    touch "$LOCKFILE"
+    trap cleanup EXIT
+fi
+
+cd /tmp || { echo "Failed to change directory to /tmp"; cleanup; }
+
+echo "Script Version: 1.7"
 sleep 3
 clear
 
@@ -73,7 +92,7 @@ while true; do
             wget -O main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
             unzip -o /tmp/main.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/main.zip
-            cd /tmp/Config-Open-ClashMeta-main || { echo "Failed to change directory"; exit 1; }
+            cd /tmp/Config-Open-ClashMeta-main || { echo "Failed to change directory"; cleanup; }
             mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb && chmod +x /etc/mihomo/run/Country.mmdb
             mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat && chmod +x /etc/mihomo/run/GeoIP.dat
             mv -f config/GeoSite.dat /etc/mihomo/run/GeoSite.dat && chmod +x /etc/mihomo/run/GeoSite.dat
@@ -96,7 +115,7 @@ while true; do
             ;;
         x|X)
             echo "Exiting..."
-            exit
+            cleanup
             ;;
         *)
             echo "Invalid option selected!"
@@ -104,6 +123,6 @@ while true; do
     esac
 
     echo "Returning to the menu..."
-    cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
+    cd /tmp || { echo "Failed to change directory to /tmp"; cleanup; }
     sleep 2
 done
