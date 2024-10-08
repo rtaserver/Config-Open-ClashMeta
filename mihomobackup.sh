@@ -1,18 +1,11 @@
 #!/bin/bash
 
-clone_gh() {
-    local REPO_URL="$1"
-    local BRANCH="$2"
-    local TARGET_DIR="$3"
-    rm -rf $TARGET_DIR
-    echo "Cloning repository..."
-    git clone -b $BRANCH $REPO_URL $TARGET_DIR
-}
+cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
 
-cd /tmp
-echo "Script Version: 1.2"
+echo "Script Version: 1.4"
 sleep 3
 clear
+
 while true; do
     clear
     echo "================================================"
@@ -35,7 +28,7 @@ while true; do
     echo "================================================"
     echo " > X - Exit Script"
     echo "================================================"
-    read choice
+    read -r choice
 
     case $choice in
         1)
@@ -56,6 +49,7 @@ while true; do
             else
                 echo "Failed to create the archive"
             fi
+            sleep 3
             ;;
         2)
             echo "Restore Backup Full Config..."
@@ -71,25 +65,27 @@ while true; do
             else
                 echo "Backup file does not exist: $backup_file"
             fi
+            sleep 3
             ;;
         3)
             echo "Download Full Backup Config By RTA-WRT"
             sleep 2
             wget -O main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
-            unzip /tmp/main.zip
+            unzip -o /tmp/main.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/main.zip
-            cd /tmp/Config-Open-ClashMeta-main
-            cd /tmp/cfgmihomo
-            mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb
-            mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat
-            mv -f config/GeoSite.dat /etc/mihomo/run/GeoSite.dat
-            mv -f config/proxy_provider /etc/mihomo/run/proxy_provider
-            mv -f config/rule_provider /etc/mihomo/run/rule_provider
-            mv -f configmihomo/cache.db /etc/mihomo/run/cache.db
-            mv -f configmihomo/config-wrt.yaml /etc/mihomo/profiles/config-wrt.yaml
-            mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml
+            cd /tmp/Config-Open-ClashMeta-main || { echo "Failed to change directory"; exit 1; }
+            mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb && chmod +x /etc/mihomo/run/Country.mmdb
+            mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat && chmod +x /etc/mihomo/run/GeoIP.dat
+            mv -f config/GeoSite.dat /etc/mihomo/run/GeoSite.dat && chmod +x /etc/mihomo/run/GeoSite.dat
+            mv -f config/proxy_provider /etc/mihomo/run/proxy_provider && chmod +x /etc/mihomo/run/proxy_provider/*
+            mv -f config/rule_provider /etc/mihomo/run/rule_provider && chmod +x /etc/mihomo/run/rule_provider/*
+            mv -f configmihomo/cache.db /etc/mihomo/run/cache.db && chmod +x /etc/mihomo/run/cache.db
+            mv -f configmihomo/config-wrt.yaml /etc/mihomo/prifiles/config-wrt.yaml && chmod +x /etc/mihomo/prifiles/config-wrt.yaml
+            mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml && chmod +x /etc/mihomo/run/config.yaml
             mv -f configmihomo/mihomo /etc/config/mihomo
+            rm -rf /tmp/Config-Open-ClashMeta-main
             echo "Installation completed successfully!"
+            sleep 3
             ;;
         x|X)
             echo "Exiting..."
@@ -101,6 +97,6 @@ while true; do
     esac
 
     echo "Returning to the menu..."
-    cd /tmp
+    cd /tmp || { echo "Failed to change directory to /tmp"; exit 1; }
     sleep 2
 done
