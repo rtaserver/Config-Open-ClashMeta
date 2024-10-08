@@ -21,7 +21,7 @@ fi
 
 cd /tmp || { echo "Failed to change directory to /tmp"; cleanup; }
 
-echo "Script Version: 1.7"
+echo "Script Version: 1.8"
 sleep 3
 clear
 
@@ -89,7 +89,7 @@ while true; do
         3)
             echo "Download Full Backup Config By RTA-WRT"
             sleep 2
-            wget -O main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
+            wget -O /tmp/main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
             unzip -o /tmp/main.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/main.zip
             cd /tmp/Config-Open-ClashMeta-main || { echo "Failed to change directory"; cleanup; }
@@ -107,7 +107,7 @@ while true; do
             echo "Download Dashboard Yacd"
             sleep 2
             cd /tmp
-            wget -O gh-pages.zip https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
+            wget -O /tmp/gh-pages.zip https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
             unzip -o /tmp/gh-pages.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/gh-pages.zip
             mv -fT /tmp/Yacd-meta-gh-pages /etc/mihomo/run/ui/dashboard
