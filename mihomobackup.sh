@@ -106,6 +106,7 @@ while true; do
             clear
             echo "Download Dashboard Yacd"
             sleep 2
+            cd /tmp
             wget -O gh-pages.zip https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
             unzip -o /tmp/gh-pages.zip -d /tmp  # Use -o to overwrite existing files
             rm -rf /tmp/gh-pages.zip
