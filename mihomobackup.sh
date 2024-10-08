@@ -72,7 +72,7 @@ while true; do
         3)
             echo "Download Full Backup Config By RTA-WRT"
             sleep 2
-            wget https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
+            wget -O main.zip https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
             uzip /tmp/main.zip && rm -rf /tmp/main.zip && cd /tmp/Config-Open-ClashMeta-main
             cd /tmp/cfgmihomo
             mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb
