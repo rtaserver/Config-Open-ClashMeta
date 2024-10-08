@@ -72,17 +72,18 @@ while true; do
         3)
             echo "Download Full Backup Config By RTA-WRT"
             sleep 2
-            clone_gh "https://github.com/rtaserver/Config-Open-ClashMeta.git" "main" "/tmp/cfgmihomo"
+            wget https://github.com/rtaserver/Config-Open-ClashMeta/archive/refs/heads/main.zip
+            uzip main.zip && rm -rf main.zip && cd Config-Open-ClashMeta-main
             cd /tmp/cfgmihomo
-            mv config/Country.mmdb /etc/mihomo/run/Country.mmdb
-            mv config/GeoIP.dat /etc/mihomo/run/GeoIP.dat
-            mv config/GeoSite.dat /etc/mihomo/run/GeoSite.dat
-            mv config/proxy_provider /etc/mihomo/run/proxy_provider
-            mv config/rule_provider /etc/mihomo/run/rule_provider
-            mv configmihomo/cache.db /etc/mihomo/run/cache.db
-            mv configmihomo/config-wrt.yaml /etc/mihomo/prifiles/config-wrt.yaml
-            mv configmihomo/config.yaml /etc/mihomo/run/config.yaml
-            mv configmihomo/mihomo /etc/config/mihomo
+            mv -f config/Country.mmdb /etc/mihomo/run/Country.mmdb
+            mv -f config/GeoIP.dat /etc/mihomo/run/GeoIP.dat
+            mv -f config/GeoSite.dat /etc/mihomo/run/GeoSite.dat
+            mv -f config/proxy_provider /etc/mihomo/run/proxy_provider
+            mv -f config/rule_provider /etc/mihomo/run/rule_provider
+            mv -f configmihomo/cache.db /etc/mihomo/run/cache.db
+            mv -f configmihomo/config-wrt.yaml /etc/mihomo/prifiles/config-wrt.yaml
+            mv -f configmihomo/config.yaml /etc/mihomo/run/config.yaml
+            mv -f configmihomo/mihomo /etc/config/mihomo
             echo "Installation completed successfully!"
             ;;
         x|X)
