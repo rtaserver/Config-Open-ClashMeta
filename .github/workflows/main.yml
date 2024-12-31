@@ -52,14 +52,13 @@ jobs:
           chmod +x ./rule_provider/rp-reject.yaml
           chmod +x ./rule_provider/rp-umum.yaml
 
-          rm -rf mihomo
-
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🎉 Sync: ${{ env.BUILDTIME }}"
 
       - name: Move and zip files
         run: |
+          rm -rf ./config/mihomo
           tar -czvf Backup-OpenClash-$(TZ=Asia/Jakarta date +'%Y-%m-%d-%H-%M-%S').tar.gz -C ./config .
 
       - name: Delete current release assets

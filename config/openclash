@@ -1,5 +1,5 @@
 config dns_servers
-	option enabled '1'
+	option enabled '0'
 	option group 'nameserver'
 	option type 'udp'
 	option ip '1.1.1.1'
