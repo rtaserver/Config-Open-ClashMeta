@@ -221,3 +221,6 @@ main() {
         read -p "Press Enter to continue..."
     done
 }
+
+# Start script
+main
