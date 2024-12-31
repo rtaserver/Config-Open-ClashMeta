@@ -85,6 +85,8 @@ config mixin 'mixin'
 	option geox_update_interval '24'
 	option api_secret 'rizkikotet'
 	option mixin_file_content '0'
+	option enable_tcp_concurrent '0'
+	option enable_unified_delay '1'
 	option tun_device 'mihomo'
 
 config host
