@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Update GeoData
         working-directory: ./config
-        run : |
+        run: |
           rm -fr Country.mmdb
           rm -fr GeoIP.dat
           rm -fr GeoSite.dat
@@ -39,22 +39,25 @@ jobs:
           chmod +x GeoIP.dat
           chmod +x GeoSite.dat
 
-          chmod +x ./config/config-wrt.yaml
-          
-          chmod +x ./proxy_provider/pp-browsing.yaml
+          chmod +x ./config/config-rule-wrt.yaml
+          chmod +x ./config/config-simple-wrt.yaml
+
+          chmod +x ./proxy_provider/pp-sg.yaml
           chmod +x ./proxy_provider/pp-direct.yaml
           chmod +x ./proxy_provider/pp-gaming.yaml
-          chmod +x ./proxy_provider/pp-indo.yaml
-          
+          chmod +x ./proxy_provider/pp-id.yaml
+
           chmod +x ./rule_provider/rp-direct.yaml
           chmod +x ./rule_provider/rp-indo.yaml
           chmod +x ./rule_provider/rp-reject.yaml
           chmod +x ./rule_provider/rp-umum.yaml
 
+          rm -rf mihomo
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🎉 Sync: ${{ env.BUILDTIME }}"
-    
+
       - name: Move and zip files
         run: |
           tar -czvf Backup-OpenClash-$(TZ=Asia/Jakarta date +'%Y-%m-%d-%H-%M-%S').tar.gz -C ./config .
@@ -83,20 +86,6 @@ jobs:
             - Auto Update GeoIP
             - Auto Update GeoSite
 
-      # - name: Send Telegram
-      #   uses: appleboy/telegram-action@master
-      #   with:
-      #     to: ${{ secrets.TELEGRAM_CHAT_ID }}
-      #     token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      #     format: markdown
-      #     document: ./Backup-OpenClash-$(date +'%Y-%m-%d-%H-%M-%S').tar.gz
-      #     message: |
-      #       ### Update Config ClashMeta - RTA SERVER
-      #       Build date: ${{ env.BUILDTIME }}
-      #       See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
-      #       - Auto Update GeoIP
-      #       - Auto Update GeoSite
-    
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
         continue-on-error: true
