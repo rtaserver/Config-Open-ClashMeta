@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script configuration
-VERSION="2.1"
+VERSION="2.2"
 LOCKFILE="/tmp/mihomotproxy.lock"
 BACKUP_DIR="/root/backups-mihomo"
 TEMP_DIR="/tmp"
@@ -216,6 +216,150 @@ system_info() {
     printf "\033[0;34m╚═══════════════════════════════════════════╝\033[0m\n"
 }
 
+install_mihomo() {
+    log_message "info" "Starting MihomoTProxy installation..."
+
+    # Check environment
+    if [[ ! -x "/bin/opkg" && ! -x "/usr/bin/apk" || ! -x "/sbin/fw4" ]]; then
+        handle_error "System requirements not met. Only supports OpenWrt build with firewall4!"
+    fi
+
+    # Include openwrt_release
+    if [[ ! -f "/etc/openwrt_release" ]]; then
+        handle_error "OpenWrt release file not found"
+    fi
+    . /etc/openwrt_release
+
+    # Get branch/arch
+    arch="$DISTRIB_ARCH"
+    [[ -z "$arch" ]] && handle_error "Could not determine system architecture"
+    
+    # Determine branch
+    case "$DISTRIB_RELEASE" in
+        *"23.05"*)
+            branch="openwrt-23.05"
+            ;;
+        *"24.10"*)
+            branch="openwrt-24.10"
+            ;;
+        "SNAPSHOT")
+            branch="SNAPSHOT"
+            ;;
+        *)
+            handle_error "Unsupported OpenWrt release: $DISTRIB_RELEASE"
+            ;;
+    esac
+
+    # Create temporary directory for downloads
+    local temp_dir=$(mktemp -d)
+    [[ ! -d "$temp_dir" ]] && handle_error "Failed to create temporary directory"
+    
+    # Download tarball
+    log_message "info" "Downloading MihomoTProxy package..."
+    local tarball="mihomo_$arch-$branch.tar.gz"
+    local download_url="https://github.com/rizkikotet-dev/OpenWrt-mihomo-Mod/releases/latest/download/$tarball"
+    
+    if ! curl -s -L -o "$temp_dir/$tarball" "$download_url"; then
+        rm -rf "$temp_dir"
+        handle_error "Failed to download MihomoTProxy package"
+    fi
+
+    # Extract tarball
+    log_message "info" "Extracting package..."
+    if ! tar -xzf "$temp_dir/$tarball" -C "$temp_dir"; then
+        rm -rf "$temp_dir"
+        handle_error "Failed to extract package"
+    fi
+
+    # Install packages based on package manager
+    if [ -x "/bin/opkg" ]; then
+        log_message "info" "Updating package feeds..."
+        if ! opkg update; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to update package feeds"
+        fi
+
+        log_message "info" "Installing MihomoTProxy packages..."
+        cd "$temp_dir" || handle_error "Failed to change to temporary directory"
+        
+        if ! opkg install mihomo_*.ipk; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to install mihomo package"
+        fi
+        
+        if ! opkg install luci-app-mihomo_*.ipk; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to install luci-app-mihomo package"
+        fi
+    elif [ -x "/usr/bin/apk" ]; then
+        log_message "info" "Updating Alpine package repository..."
+        if ! apk update; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to update package repository"
+        fi
+
+        log_message "info" "Installing MihomoTProxy packages..."
+        cd "$temp_dir" || handle_error "Failed to change to temporary directory"
+        
+        if ! apk add --allow-untrusted mihomo-*.apk; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to install mihomo package"
+        fi
+        
+        if ! apk add --allow-untrusted luci-app-mihomo-*.apk; then
+            rm -rf "$temp_dir"
+            handle_error "Failed to install luci-app-mihomo package"
+        fi
+    fi
+
+    # Cleanup
+    rm -rf "$temp_dir"
+    log_message "info" "MihomoTProxy installation completed successfully!"
+}
+
+uninstall_mihomo() {
+    log_message "info" "Starting MihomoTProxy uninstallation..."
+
+    # Create backup before uninstalling
+    local backup_name="pre_uninstall_backup_$(date +%Y%m%d_%H%M%S)"
+    log_message "info" "Creating backup before uninstallation..."
+    perform_backup
+
+    # Remove packages based on package manager
+    if [ -x "/bin/opkg" ]; then
+        log_message "info" "Removing MihomoTProxy packages..."
+        if ! opkg remove luci-app-mihomo; then
+            log_message "warn" "Failed to remove luci-app-mihomo package"
+        fi
+        if ! opkg remove mihomo; then
+            log_message "warn" "Failed to remove mihomo package"
+        fi
+    elif [ -x "/usr/bin/apk" ]; then
+        log_message "info" "Removing MihomoTProxy packages..."
+        if ! apk del luci-app-mihomo; then
+            log_message "warn" "Failed to remove luci-app-mihomo package"
+        fi
+        if ! apk del mihomo; then
+            log_message "warn" "Failed to remove mihomo package"
+        fi
+    else
+        handle_error "No supported package manager found"
+    fi
+
+    # Remove configuration files
+    log_message "info" "Removing configuration files..."
+    if [ -d "/etc/mihomo" ]; then
+        rm -rf "/etc/mihomo" || log_message "warn" "Failed to remove /etc/mihomo directory"
+    fi
+    
+    if [ -f "/etc/config/mihomo" ]; then
+        rm -f "/etc/config/mihomo" || log_message "warn" "Failed to remove /etc/config/mihomo file"
+    fi
+
+    log_message "info" "MihomoTProxy uninstallation completed successfully!"
+    log_message "info" "A backup was created before uninstallation in case you need to restore later."
+}
+
 # Display menu with system info option
 display_menu() {
     clear
@@ -226,17 +370,21 @@ display_menu() {
     printf "\033[0;32m                 Version: \033[1;33m$VERSION\033[0m\n\n"
     
     printf "\033[0;34m╠═══════════════════════════════════════════╣\033[0m\n"
+    printf "\033[0;32m >> MIHOMO MENU\033[0m\n"
+    printf " > \033[1;33m1\033[0m - \033[0;34mInstall MihomoTProxy\033[0m\n\n"
+    printf " > \033[1;33m2\033[0m - \033[0;34mUninstall MihomoTProxy\033[0m\n\n"
+
     printf "\033[0;32m >> BACKUP MENU\033[0m\n"
-    printf " > \033[1;33m1\033[0m - \033[0;34mBackup Full Config\033[0m\n\n"
+    printf " > \033[1;33m3\033[0m - \033[0;34mBackup Full Config\033[0m\n\n"
     
     printf "\033[0;32m >> RESTORE MENU\033[0m\n"
-    printf " > \033[1;33m2\033[0m - \033[0;34mRestore Backup Full Config\033[0m\n\n"
+    printf " > \033[1;33m4\033[0m - \033[0;34mRestore Backup Full Config\033[0m\n\n"
     
     printf "\033[0;32m >> CONFIG MENU\033[0m\n"
-    printf " > \033[1;33m3\033[0m - \033[0;34mDownload Full Backup Config By RTA-WRT\033[0m\n\n"
+    printf " > \033[1;33m5\033[0m - \033[0;34mDownload Full Backup Config By RTA-WRT\033[0m\n\n"
     
     printf "\033[0;32m >> SYSTEM INFO\033[0m\n"
-    printf " > \033[1;33m4\033[0m - \033[0;34mDisplay System Information\033[0m\n"
+    printf " > \033[1;33m6\033[0m - \033[0;34mDisplay System Information\033[0m\n"
     
     printf "\033[0;34m╠═══════════════════════════════════════════╣\033[0m\n"
     printf " > \033[0;31mX\033[0m - Exit Script\n"
@@ -256,13 +404,15 @@ main() {
         read -r choice
 
         case "$choice" in
-            1) perform_backup ;;
-            2) 
+            1) install_mihomo ;;
+            2) uninstall_mihomo ;;
+            3) perform_backup ;;
+            4) 
                 read -p "Enter backup file path: " backup_file
                 perform_restore "$backup_file"
                 ;;
-            3) install_config ;;
-            4) system_info ;;
+            5) install_config ;;
+            6) system_info ;;
             [xX]) 
                 log_message "info" "Exiting..."
                 exit 0 
