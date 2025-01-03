@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script configuration
-VERSION="2.2"
+VERSION="2.3"
 LOCKFILE="/tmp/mihomotproxy.lock"
 BACKUP_DIR="/root/backups-mihomo"
 TEMP_DIR="/tmp"
@@ -132,7 +132,7 @@ perform_restore() {
 
 # Download and install configuration with progress tracking
 install_config() {
-    check_network
+    # check_network
     log_message "info" "Downloading configuration files..."
     
     wget -q --show-progress -O "$TEMP_DIR/main.zip" \
