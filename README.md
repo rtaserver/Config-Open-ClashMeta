@@ -36,7 +36,7 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 - For MihomoTProxy :
 
 ```bash
-bash -c "$(wget -qO - 'https://raw.githubusercontent.com/rizkikotet-dev/Config-Open-ClashMeta/main/mihomobackup.sh')"
+bash -c "$(wget -qO - 'https://github.com/rizkikotet-dev/OpenWrt-mihomo-Mod/raw/refs/heads/main/autoscript.sh')"
 ```
 
 ### Overviews
