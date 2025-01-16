@@ -4,11 +4,11 @@
 </h1>
 
 <p align="center">
-  <a href="https://github.com/rtaserver/Config-Open-ClashMeta/releases">
-    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/rtaserver/Config-Open-ClashMeta?label=Latest%20Release&labelColor=white">
+  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/releases">
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/rizkikotet-dev/Config-Open-ClashMeta?label=Latest%20Release&labelColor=white">
   </a>
-  <a href="https://github.com/rtaserver/Config-Open-ClashMeta/blob/main/LICENSE">
-   <img alt="GitHub" src="https://img.shields.io/github/license/rtaserver/Config-Open-ClashMeta">
+  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/blob/main/LICENSE">
+   <img alt="GitHub" src="https://img.shields.io/github/license/rizkikotet-dev/Config-Open-ClashMeta">
   </a>
 </p>
 
@@ -26,51 +26,53 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 <p>
 
 <p align="center">
-  <a href="https://github.com/rtaserver/Config-Open-ClashMeta/releases">
+  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/releases">
     <button type="button" name="myButton">Download Config</button>
   </a>
 </p>
 
 ## Documentation
-- For MihomoTProxy : 
+
+- For MihomoTProxy :
+
 ```bash
-bash -c "$(wget -qO - 'https://raw.githubusercontent.com/rtaserver/Config-Open-ClashMeta/main/mihomobackup.sh')"
+bash -c "$(wget -qO - 'https://github.com/rizkikotet-dev/OpenWrt-mihomo-Mod/raw/refs/heads/main/autoscript.sh')"
 ```
+
 ### Overviews
 
 ![Img](image/Overviews.png)
 
 ### Setting Configuration DNS
-* NOTES : `DNS Provider Khusus Nol Kuota`
-  * `112.215.198.248` : DNS XL
-  * `112.215.198.254` : DNS XL
-* Silahkan Ganti Dengan DNS Provider / DNS Global
-* Contoh :
-  * `1.1.1.1` : Cloudflare
-  * `8.8.8.8` : Google
-  * `9.9.9.9` : Quad9
+
+- NOTES : `DNS Provider Khusus Nol Kuota`
+  - `112.215.198.248` : DNS XL
+  - `112.215.198.254` : DNS XL
+- Silahkan Ganti Dengan DNS Provider / DNS Global
+- Contoh :
+  - `1.1.1.1` : Cloudflare
+  - `8.8.8.8` : Google
+  - `9.9.9.9` : Quad9
 
 ![img1](image/DNS.png)
 
-* Jika Ingin Menambahkan DNS Baru
+- Jika Ingin Menambahkan DNS Baru
 
 ![img1](image/Add-DNS.png)
 
 ### Yacd Overviews Configuration
 
-* Setting DNS Di Yacd
-  * `Jika Dari ISP / MODEM` `DNS Leaked`. Tapi Fast Connect
-  * `Jika Dari SERVER` `DNS Anti Leaked`. Tapi Butuh Beberapa Detik Baru Internet Jalan
-* `NOTES` : Leaked Di Atas Tergantung Saat Pengisian DNS Di `Default-NameServer`
-  * Silahkan Cek Di Atas Fungsinya
+- Setting DNS Di Yacd
+  - `Jika Dari ISP / MODEM` `DNS Leaked`. Tapi Fast Connect
+  - `Jika Dari SERVER` `DNS Anti Leaked`. Tapi Butuh Beberapa Detik Baru Internet Jalan
+- `NOTES` : Leaked Di Atas Tergantung Saat Pengisian DNS Di `Default-NameServer`
+  - Silahkan Cek Di Atas Fungsinya
 
 ![img1](image/DNS-SET.png)
 
-* Setting Global Proxy
-  * `Traffic-Browsing`
+- Setting Global Proxy
+  - `Traffic-Browsing`
 
 ![img6](image/Yacd.png)
 
-
 ---
-
